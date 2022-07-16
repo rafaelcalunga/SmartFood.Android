@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:smartfood/models/category.dart';
 import 'package:smartfood/models/recipe.dart';
 
@@ -40,36 +42,56 @@ class RecipesView extends StatefulWidget {
   State<RecipesView> createState() => _RecipesViewState();
 }
 
-List<Recipe> fetchRecipes() {
+/*List<Recipe> fetchRecipes() {
   const Category category = Category(id: "123", name: "Desserts");
 
   return [
     const Recipe(id: "123", name: "Banana Cake", preparationTime: 2, servings: 3, ingredients: "Banana and sugar", description: "", category: category, photo: "https://picsum.photos/id/102/400/300"),
     const Recipe(id: "123", name: "Chocolate Cake", preparationTime: 4, servings: 5, ingredients: "Cholate and sugar", description: "", category: category, photo: "https://picsum.photos/id/102/400/300")
   ];
+}*/
+
+Future<List<Recipe>> fetchRecipes() async {
+  final url = Uri.parse('https://smartfood-api.azurewebsites.net/api/recipes');
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    List<dynamic> body = jsonDecode(response.body);
+    return body.map((dynamic item) => Recipe.fromJson(item)).toList();
+  } else {
+    throw Exception('Failed to load recipes');
+  }
 }
 
 class _RecipesViewState extends State<RecipesView> {
-  List<Recipe> recipes = [];
+  late Future<List<Recipe>> recipes;
 
   @override
   void initState() {
     super.initState();
     recipes = fetchRecipes();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ListView(
-        children: recipes.map((Recipe recipe) => ListTile(
-          title: Text(recipe.name),
-          subtitle: Text(recipe.category.name),
-        )).toList()
-      )
+      body: FutureBuilder<List<Recipe>>(
+          future: recipes,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView(
+                  children: snapshot.data!
+                      .map((Recipe recipe) => ListTile(
+                            title: Text(recipe.name),
+                            subtitle: Text(recipe.category.name),
+                          ))
+                      .toList());
+            }
+            return const Center(child: CircularProgressIndicator());
+          }),
     );
   }
 }
