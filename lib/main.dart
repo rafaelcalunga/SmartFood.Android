@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:smartfood/models/category.dart';
 import 'package:smartfood/models/recipe.dart';
+import 'package:smartfood/views/recipe-view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -84,10 +84,7 @@ class _RecipesViewState extends State<RecipesView> {
             if (snapshot.hasData) {
               return ListView(
                   children: snapshot.data!
-                      .map((Recipe recipe) => ListTile(
-                            title: Text(recipe.name),
-                            subtitle: Text(recipe.category.name),
-                          ))
+                      .map((Recipe recipe) => RecipeView(recipe: recipe))
                       .toList());
             }
             return const Center(child: CircularProgressIndicator());
