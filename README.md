@@ -1,4 +1,4 @@
-# smartfood
+# SmartFood.Android
 
 A new Flutter project.
 
