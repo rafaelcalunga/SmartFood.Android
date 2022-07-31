@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:smartfood/models/recipe.dart';
+import 'package:smartfood/views/recipe_form_view.dart';
 import 'package:smartfood/views/recipe_view.dart';
 
 class RecipesView extends StatefulWidget {
@@ -42,6 +43,14 @@ class _RecipesViewState extends State<RecipesView> {
     recipes = fetchRecipes();
   }
 
+  void _goToForm() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return const RecipeFormView();
+      })
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +68,10 @@ class _RecipesViewState extends State<RecipesView> {
             }
             return const Center(child: CircularProgressIndicator());
           }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _goToForm,
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

@@ -21,7 +21,6 @@ class _RecipeViewState extends State<RecipeView> {
             child: Image.network(widget.recipe.photo)),
         title: Text(widget.recipe.name),
         subtitle: Column(
-          //VStack
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
