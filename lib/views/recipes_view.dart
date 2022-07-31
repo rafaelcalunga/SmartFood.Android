@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:smartfood/models/recipe.dart';
-import 'package:smartfood/views/recipe-view.dart';
+import 'package:smartfood/views/recipe_view.dart';
 
 class RecipesView extends StatefulWidget {
   const RecipesView({Key? key, required this.title}) : super(key: key);

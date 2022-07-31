@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smartfood/views/recipes-view.dart';
+import 'package:smartfood/views/recipes_view.dart';
 
 void main() {
   runApp(const MyApp());
