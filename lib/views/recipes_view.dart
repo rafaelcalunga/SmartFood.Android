@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:smartfood/config/constants.dart';
 import 'package:smartfood/models/recipe.dart';
 import 'package:smartfood/views/recipe_form_view.dart';
 import 'package:smartfood/views/recipe_view.dart';
@@ -24,7 +25,7 @@ class RecipesView extends StatefulWidget {
 }*/
 
 Future<List<Recipe>> fetchRecipes() async {
-  final url = Uri.parse('https://smartfood-api.azurewebsites.net/api/recipes');
+  final url = Uri.https(APP_API_URL, '/api/recipes');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {

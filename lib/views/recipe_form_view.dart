@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:smartfood/config/constants.dart';
 import 'package:smartfood/models/category.dart';
 import 'package:smartfood/models/recipe.dart';
 
@@ -13,8 +14,7 @@ class RecipeFormView extends StatefulWidget {
 }
 
 Future<List<Category>> fetchCategories() async {
-  final url =
-      Uri.parse('https://smartfood-api.azurewebsites.net/api/categories');
+  final url = Uri.https(APP_API_URL, '/api/categories');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
@@ -37,7 +37,7 @@ class _RecipeFormViewState extends State<RecipeFormView> {
       servings: 0,
       ingredients: '',
       description: '',
-      category: const Category(id: '', name: ''),
+      category: Category(id: '', name: ''),
       photo: '');
 
   @override
@@ -142,7 +142,9 @@ class _RecipeFormViewState extends State<RecipeFormView> {
                                 },
                                 onSaved: (value) {
                                   if (value != null) {
-                                    _recipe.category = snapshot.data!.firstWhere((category) => category.id == value);
+                                    _recipe.category = snapshot.data!
+                                        .firstWhere(
+                                            (category) => category.id == value);
                                   }
                                 }));
                       }
