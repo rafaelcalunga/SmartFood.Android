@@ -58,7 +58,7 @@ class _RecipeFormViewState extends State<RecipeFormView> {
     _categories = fetchCategories();
   }
 
-  Future<void> _SaveAction() async {
+  Future<void> _saveRecipeAction() async {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Saving...')),
@@ -234,7 +234,7 @@ class _RecipeFormViewState extends State<RecipeFormView> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    await _SaveAction();
+                    await _saveRecipeAction();
                   },
                   child: const Text('Add Recipe'),
                 ),
