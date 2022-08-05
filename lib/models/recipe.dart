@@ -1,16 +1,16 @@
 import 'category.dart';
 
 class Recipe {
-  final String id;
-  final String name;
-  final int preparationTime;
-  final int servings;
-  final String ingredients;
-  final String description;
-  final Category category;
-  final String photo;
+  String id;
+  String name;
+  int preparationTime;
+  int servings;
+  String ingredients;
+  String description;
+  Category category;
+  String photo;
 
-  const Recipe({
+  Recipe({
     required this.id,
     required this.name,
     required this.preparationTime,
@@ -21,15 +21,24 @@ class Recipe {
     required this.photo,
   });
 
-  factory Recipe.fromJson(Map<String, dynamic> json) {
-    return Recipe(
-        id: json['id'],
-        name: json['name'],
-        preparationTime: json['preparationTime'],
-        servings: json['servings'],
-        ingredients: json['ingredients'],
-        description: json['description'],
-        category: Category.fromJson(json['category']),
-        photo: json['photo']);
-  }
+  factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
+      id: json['id'],
+      name: json['name'],
+      preparationTime: json['preparationTime'],
+      servings: json['servings'],
+      ingredients: json['ingredients'],
+      description: json['description'],
+      category: Category.fromJson(json['category']),
+      photo: json['photo']);
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'preparationTime': preparationTime,
+        'servings': servings,
+        'ingredients': ingredients,
+        'description': description,
+        'category': category.toJson(),
+        'photo': photo
+      };
 }
