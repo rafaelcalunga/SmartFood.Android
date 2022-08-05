@@ -32,7 +32,6 @@ class Recipe {
       photo: json['photo']);
 
   Map<String, dynamic> toJson() => {
-        'id': id,
         'name': name,
         'preparationTime': preparationTime,
         'servings': servings,

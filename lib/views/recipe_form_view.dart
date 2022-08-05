@@ -25,6 +25,18 @@ Future<List<Category>> fetchCategories() async {
   }
 }
 
+Future<bool> postRecipe(Recipe recipe) async {
+  final url = Uri.https(APP_API_URL, '/api/recipes');
+
+  final response = await http.post(url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(recipe.toJson()));
+
+  return response.statusCode == 201;
+}
+
 class _RecipeFormViewState extends State<RecipeFormView> {
   final _formKey = GlobalKey<FormState>();
 
@@ -38,12 +50,33 @@ class _RecipeFormViewState extends State<RecipeFormView> {
       ingredients: '',
       description: '',
       category: Category(id: '', name: ''),
-      photo: '');
+      photo: 'https://picsum.photos/400/300');
 
   @override
   void initState() {
     super.initState();
     _categories = fetchCategories();
+  }
+
+  Future<void> _SaveAction() async {
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Saving...')),
+      );
+    
+      _formKey.currentState!.save();
+      var result = await postRecipe(_recipe);
+      if (result) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Saved')),
+        );
+        Navigator.of(context).pop();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error')),
+        );
+      }
+    }
   }
 
   @override
@@ -200,18 +233,8 @@ class _RecipeFormViewState extends State<RecipeFormView> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-
-                      print("LOG: SAVING...");
-                      print(_recipe.toJson());
-
-                      // If the form is valid, display a Snackbar.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
-                    }
+                  onPressed: () async {
+                    await _SaveAction();
                   },
                   child: const Text('Add Recipe'),
                 ),
