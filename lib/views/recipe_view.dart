@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:smartfood/models/recipe.dart';
 
 class RecipeView extends StatefulWidget {
-  const RecipeView({Key? key, required this.recipe}) : super(key: key);
+  const RecipeView({Key? key, required this.recipe, required this.deleteAction}) : super(key: key);
 
   final Recipe recipe;
+  final dynamic deleteAction;
 
   @override
   State<RecipeView> createState() => _RecipeViewState();
@@ -49,7 +50,12 @@ class _RecipeViewState extends State<RecipeView> {
             ),
           ],
         ),
-        trailing: const Icon(Icons.chevron_right),
+        trailing:
+            TextButton(
+              child: const Icon(Icons.remove_circle), 
+              onPressed: () {
+                 widget.deleteAction(widget.recipe.id);
+              }),
       ),
     );
   }

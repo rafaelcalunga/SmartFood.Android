@@ -53,6 +53,21 @@ class _RecipesViewState extends State<RecipesView> {
     );
   }
 
+  void deleteRecipe(String id) async {
+    print("deleteRecipe, $id");
+
+    final url = Uri.https(APP_API_URL, '/api/recipes/$id');
+    final response = await http.delete(url);
+
+    if (response.statusCode == 204) {
+      setState(() {
+        recipes.then((liste) => liste.removeWhere((element) => element.id == id));
+      });
+    } else {
+      throw Exception('Failed to delete recipes');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,8 +80,10 @@ class _RecipesViewState extends State<RecipesView> {
             if (snapshot.hasData) {
               return ListView(
                   children: snapshot.data!
-                      .map((Recipe recipe) => RecipeView(recipe: recipe))
-                      .toList());
+                      .toList()
+                      .map((Recipe recipe) => RecipeView(recipe: recipe, deleteAction: deleteRecipe))
+                      .toList()
+              );
             }
             return const Center(child: CircularProgressIndicator());
           }),
