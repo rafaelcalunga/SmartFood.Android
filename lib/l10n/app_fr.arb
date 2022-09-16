@@ -1,0 +1,9 @@
+{
+    "done": "OK",
+    "cancel": "Annuler",
+
+    "recipes": "Recettes",
+    "name": "Nom",
+    "preparationTime": "Temps de préparation",
+    "servings": "Portions"
+}

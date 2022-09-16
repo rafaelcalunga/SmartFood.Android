@@ -1,0 +1,9 @@
+{
+    "done": "Done",
+    "cancel": "Cancel",
+
+    "recipes": "Recipes",
+    "name": "Name",
+    "preparationTime": "Preparation Time",
+    "servings": "Servings"
+}

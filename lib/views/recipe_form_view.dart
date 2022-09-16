@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:smartfood/config/constants.dart';
 import 'package:smartfood/models/category.dart';
@@ -81,6 +82,8 @@ class _RecipeFormViewState extends State<RecipeFormView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Add Recipe')),
       body: SingleChildScrollView(
@@ -93,9 +96,9 @@ class _RecipeFormViewState extends State<RecipeFormView> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),
                   child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Name',
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: t.name,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -113,11 +116,11 @@ class _RecipeFormViewState extends State<RecipeFormView> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),
                   child: TextFormField(
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Preparation time',
+                    decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: t.preparationTime,
                         hintText: 'Time in minutes',
-                        suffixIcon: Icon(Icons.access_time)),
+                        suffixIcon: const Icon(Icons.access_time)),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -135,10 +138,10 @@ class _RecipeFormViewState extends State<RecipeFormView> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),
                   child: TextFormField(
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Servings',
-                        suffixIcon: Icon(Icons.restaurant)),
+                    decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: t.servings,
+                        suffixIcon: const Icon(Icons.restaurant)),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
